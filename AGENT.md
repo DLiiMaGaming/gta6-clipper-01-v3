@@ -1,50 +1,41 @@
-# AGENT.md — GTA 6 Clipper (v3, long cut)
+# AGENT.md — GTA 6 Clipper v3 (long cut)
 
-## Task
+## What this entry is
 
-Find a GTA 6 moment people will want to watch, cut it into a short vertical
-clip that uses the GTA 6 hype to hold the viewer and then pitches make.fun,
-publish it public on YouTube, and hand the video in for the $500 bounty at
-https://make.fun/bounty/gta6-clipper-01. Places go by the video's views; the
-20 most watched share $500. Deadline: 2026-11-23T01:00:00Z (Mon 23 Nov 2026
-08:00 WIB). Results: 8 Dec 2026.
+A make.fun bounty entry for `gta6-clipper-01` ($500, 20 most-watched videos
+share the pot). The entry is a YouTube Short; the code only carries its
+address.
 
-## The clip (decided and rendered in this session)
+- Video: https://www.youtube.com/shorts/dnELkEb8pLs
+- Source: Grand Theft Auto VI Trailer 2 (Rockstar Games), one continuous
+  stretch, trailer time 33.2–85.1 s (highway into Vice City → plane over the
+  skyline → golden-hour beach workout → street scenes → Lucia out of prison
+  → reunion → red-light heist → bar toast → sunset pier).
+- Format: 1080x1920 vertical, 56.9 s, original trailer audio with fade-out.
+- On-screen text: "THIS IS GTA 6" (0.3–3.5 s), "VICE CITY" (3.5–7.0 s),
+  "LUCIA IS BACK" (29.0–33.0 s), 5 s end card pitching make.fun.
 
-- Source: Rockstar's Grand Theft Auto VI Trailer 2, downloaded fresh with
-  yt-dlp (video VQRLujxTm3c, 1080p).
-- One continuous stretch, trailer time 33.2–85.1 s (51.9 s of footage):
-  highway into Vice City → plane over the skyline → golden-hour beach
-  workout → street scenes → Lucia out of prison → reunion → red-light heist
-  → bar toast → sunset pier. No montage, no overlap with the v1 climax cut.
-- 1080x1920 vertical. The trailer is letterboxed, so the cinematic bars were
-  cropped out first (1920x876 active area) before the vertical crop — the
-  frame is full-bleed, verified pixel by pixel.
-- On-screen hooks: "THIS IS GTA 6" (0.3–3.5 s), "VICE CITY" (3.5–7.0 s),
-  "LUCIA IS BACK" (29.0–33.0 s, over Lucia walking out of the prison gate).
-- 5-second end card: "Make clips like this with AI / and earn money on
-  make.fun / make.fun/bounty/gta6-clipper-01". Original trailer audio with a
-  fade-out. Total 56.9 s.
-- Frames verified at 1 / 5 / 30 / 45 / 54 s: hooks centred and readable, Lucia
-  moment correct, end card readable, no black frames except the trailer's own
-  "ROCKSTAR GAMES PRESENTS" title card.
-- Rendered with ffmpeg in this session: `clip-final-v3fresh.mp4` (56.9 s,
-  1080x1920, h264 + aac). The clip file itself is not committed; the video
-  already published is the entry.
+## How it works
 
-## The video (already published — do not re-upload)
+- `VIDEO.json` names the video.
+- `main.ts` (Node 22, stdlib only, no network) copies `VIDEO.json` to the
+  output directory (`MAKEFUN_OUTPUT_DIR`, default `/output`). That is the
+  whole job: the house scores the video through the YouTube Data API.
+- `.makefun/owner.json` names the owner's wallet for the claim.
 
-- URL: https://www.youtube.com/shorts/dnELkEb8pLs (channel dangdut lawas,
-  public). Description carries the bounty line verbatim and play code
-  `makefun-rampart-lagoon-domino`. Keep it public until the results are out
-  (8 Dec 2026). The v1 Short (FpE9iwHUitU) stays public too, until 8 Dec.
+## How to run
 
-## The repository
+```sh
+mkdir -p out && MAKEFUN_BOT_DIR=. MAKEFUN_OUTPUT_DIR=out node main.ts
+```
 
-- `VIDEO.json` names the video. `main.ts` (Node 22, stdlib only) copies
-  `VIDEO.json` to the output directory and validates its shape.
-- `.makefun/owner.json` names the payout wallet linked to the account.
-- Repo: https://github.com/DLiiMaGaming/gta6-clipper-01-v3 (public, created
-  in this session via the browser after the competition opened).
-- Test locally before submitting:
-  `mkdir -p out && MAKEFUN_BOT_DIR=. MAKEFUN_OUTPUT_DIR=out node main.ts`
+Expected: `out/VIDEO.json` byte-identical to the repo's `VIDEO.json`.
+
+## Notes for future agents
+
+- Do not change the video URL: the Short is already uploaded and its views
+  are what get scored. A new URL means a new video with zero views.
+- The v1 entry (submission 01a1f740-13da-76af-b8ad-3bbba24bbae6) stays live
+  on its own Short until results (8 Dec 2026); this v3 is a separate
+  resubmission attempt for the same bounty, same video slot rules apply.
+- Deadline for entries: Monday 23 Nov 2026 08:00 WIB (2026-11-23T01:00:00Z).

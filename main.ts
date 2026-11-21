@@ -1,11 +1,11 @@
 // GTA 6 Clipper — entrypoint.
 //
-// Copies VIDEO.json from this repository into the output directory.
-// That is the whole job: the house reads the video itself through the
-// YouTube Data API and scores the entry on its views. Nothing written
-// here about the video counts toward the score.
+// The entry is a video, not a program: VIDEO.json at the repository root
+// names the Short, and this script copies it into the output directory.
+// The house reads the video itself through the YouTube Data API and ranks
+// the entry on its views, so the script has nothing else to do.
 //
-// Runtime: Node 22, standard library only, no network.
+// Runtime: Node 22, standard library only, no network access.
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -49,12 +49,12 @@ function readVideoLink(): { url: string } {
 }
 
 function main(): void {
-  const link = readVideoLink();
-  const out = outputDir();
-  mkdirSync(out, { recursive: true });
-  const target = join(out, "VIDEO.json");
-  writeFileSync(target, JSON.stringify(link, null, 2) + "\n", "utf8");
-  console.log(`Wrote ${target} for ${link.url}`);
+  const video = readVideoLink();
+  const dir = outputDir();
+  mkdirSync(dir, { recursive: true });
+  // Copy the file byte-for-byte: the output must be identical to the repo's.
+  writeFileSync(join(dir, "VIDEO.json"), readFileSync(VIDEO_FILE), "utf8");
+  console.log(`Wrote VIDEO.json to ${dir} for ${video.url}`);
 }
 
 main();
